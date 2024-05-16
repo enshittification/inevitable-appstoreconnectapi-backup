@@ -76,7 +76,6 @@ class Api:
 			key = open(self.key_file, 'r').read()
 		except IOError as e:
 			key = self.key_file
-
 		self.token_gen_date = datetime.now()
 		exp = int(time.mktime((self.token_gen_date + timedelta(minutes=20)).timetuple()))
 
