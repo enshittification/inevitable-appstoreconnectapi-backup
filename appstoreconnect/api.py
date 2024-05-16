@@ -78,8 +78,6 @@ class Api:
 			key = self.key_file
 		self.token_gen_date = datetime.now()
 		exp = int(time.mktime((self.token_gen_date + timedelta(minutes=20)).timetuple()))
-
-		# Prepare token payload and header
 		token_payload = {
 			'iss': self.issuer_id,
 			'exp': exp,
@@ -89,15 +87,12 @@ class Api:
 			'kid': self.key_id,
 			'typ': 'JWT'
 		}
-
-		# Encode the token
 		encoded_token = jwt.encode(
 			payload=token_payload,
 			key=key,
 			algorithm=ALGORITHM,
 			headers=token_headers
 		)
-
 		return encoded_token
 
 	def _get_resource(self, Resource, resource_id):
