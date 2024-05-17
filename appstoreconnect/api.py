@@ -87,13 +87,12 @@ class Api:
 			'kid': self.key_id,
 			'typ': 'JWT'
 		}
-		encoded_token = jwt.encode(
+		return jwt.encode(
 			payload=token_payload,
 			key=key,
 			algorithm=ALGORITHM,
 			headers=token_headers
 		)
-		return encoded_token
 
 	def _get_resource(self, Resource, resource_id):
 		url = "%s%s/%s" % (BASE_API, Resource.endpoint, resource_id)
