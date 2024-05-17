@@ -78,8 +78,21 @@ class Api:
 			key = self.key_file
 		self.token_gen_date = datetime.now()
 		exp = int(time.mktime((self.token_gen_date + timedelta(minutes=20)).timetuple()))
-		return jwt.encode({'iss': self.issuer_id, 'exp': exp, 'aud': 'appstoreconnect-v1'}, key,
-		                   headers={'kid': self.key_id, 'typ': 'JWT'}, algorithm=ALGORITHM).decode('ascii')
+		token_payload = {
+			'iss': self.issuer_id,
+			'exp': exp,
+			'aud': 'appstoreconnect-v1'
+		}
+		token_headers = {
+			'kid': self.key_id,
+			'typ': 'JWT'
+		}
+		return jwt.encode(
+			payload=token_payload,
+			key=key,
+			algorithm=ALGORITHM,
+			headers=token_headers
+		)
 
 	def _get_resource(self, Resource, resource_id):
 		url = "%s%s/%s" % (BASE_API, Resource.endpoint, resource_id)
