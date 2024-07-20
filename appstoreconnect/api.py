@@ -1,3 +1,5 @@
+import logging
+
 import requests
 import jwt
 import gzip
@@ -307,6 +309,7 @@ class Api:
 		if content_type in ["application/json", "application/vnd.api+json"]:
 			payload = r.json()
 			if 'errors' in payload:
+				logging.error(f'Payload: {payload}')
 				raise APIError(
 					payload.get('errors', [])[0].get('detail', 'Unknown error'),
 				 	payload.get('errors', [])[0].get('status', None)
